@@ -1,0 +1,30 @@
+@mixin font-face($style-name, $file, $family, $category: "") {
+    $filepath: "../fonts/" + $family + "/" + $file;
+    @font-face {
+        font-family: "#{$style-name}";
+        src: url($filepath + ".eot");
+        src: url($filepath + ".eot?#iefix") format('embedded-opentype'), 
+        url($filepath + ".woff2") format('woff2'), 
+        url($filepath + ".woff") format('woff'), 
+        url($filepath + ".ttf")  format('truetype'), 
+        url($filepath + ".svg#" + $style-name + "") format('svg');
+    }
+    %#{$style-name} {
+        font: {
+            @if $category != "" {
+                font-family: "#{$style-name}", #{$category};
+            }
+            @else {
+                font-family: "#{$style-name}";
+                font-weight: normal;
+            }
+        }
+    }
+}
+
+@include font-face('HelveticaneueltproRoman', 'helveticaneueltpro-roman-webfont', 'HelveticaNeue', 'sans-serif');
+
+$helvetica-font-family: 'HelveticaneueltproRoman', Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+
+

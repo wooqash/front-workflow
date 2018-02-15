@@ -1,22 +1,30 @@
-import path    from 'path'
-import webpack from 'webpack'
-import process from 'process'
+import path    from 'path';
+import webpack from 'webpack';
+import process from 'process';
+import browser from 'browser-sync';
 
-const isProduction = (process.env.NODE_ENV === 'production')
+const isProduction = process.env.NODE_ENV ? process.env.NODE_ENV.trim() === "production" : false;
+
+
+let dirs = {
+    src: path.resolve(__dirname, '../src'),
+    dist: path.resolve(__dirname, '../dist')
+};
+
 
 let config = {
-
+    devtool: !isProduction ? 'cheap-module-eval-source-map' : '',
     entry: './js/main.js',
 
     output: {
         filename: './js/bundle.js',
-        path: path.resolve(__dirname, '../site')
+        path: dirs.dist
     },
 
-    context: path.resolve(__dirname, '../site'),
+    context: dirs.src,
 
     plugins: isProduction ? [ new webpack.optimize.UglifyJsPlugin() ] : []
-}
+};
 
 
 function scripts() {
@@ -27,7 +35,7 @@ function scripts() {
 
         console.log(stats.toString({ /* stats options */ }))
 
-        resolve()
+        resolve(browser.reload({stream: true}))
     }))
 }
 

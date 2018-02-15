@@ -1,24 +1,25 @@
-import gulp    from 'gulp'
-import Browser from 'browser-sync'
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
+import gulp    from 'gulp';
+import browser from 'browser-sync';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import notify from 'gulp-notify';
+import notifier from 'node-notifier';
+import { watch } from './index';
 
-import { config as webpackConfig } from './webpack'
 
-const browser = Browser.create()
-const bundler = webpack(webpackConfig)
+import { config as webpackConfig } from './webpack';
+
+const bundler = webpack(webpackConfig);
 
 export function server() {
-
-    let config = {
-        server: 'site',
-        open: false,
-        middleware: [
-            webpackDevMiddleware(bundler, { /* options */ })
-        ],
-    }
-
-    browser.init(config)
-
-    gulp.watch('site/js/*.js').on('change', () => browser.reload())
+	const config = {		
+		server: 'dist',
+		open: true,
+		middleware: [
+			webpackDevMiddleware(bundler, { /* options */ })
+		]
+	};
+	browser.init(config);
+	watch();
 }
+
