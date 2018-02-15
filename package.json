@@ -1,7 +1,7 @@
 {
   "name": "front-workflow",
   "version": "1.0.0",
-  "description": "A modern ES6 Gulp workflow combined with Webpack",
+  "description": "ES6 Gulp workflow combined with Webpack",
   "scripts": {
     "dev": "gulp --require babel-register --gulpfile tasks",
     "build": "SET NODE_ENV=production & gulp build --require babel-register --gulpfile tasks"
